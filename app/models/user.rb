@@ -1,5 +1,6 @@
 class User < ApplicationRecord
-  has_secure_password
+  devise :database_authenticatable,
+         authentication_keys: [:employee_number]
 
   enum :role, employee: 0, admin: 1
 

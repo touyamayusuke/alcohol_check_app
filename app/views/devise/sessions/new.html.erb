@@ -1,0 +1,67 @@
+<div class="flex min-h-screen items-center justify-center bg-gray-100 px-4">
+
+  <div class="w-full max-w-md rounded-lg bg-white p-6 shadow-md sm:p-8">
+
+    <h1 class="mb-6 text-center text-2xl font-bold text-gray-900">
+      アルコールチェック
+    </h1>
+
+    <h2 class="mb-6 text-center text-lg font-medium text-gray-700">
+      ログイン
+    </h2>
+
+    <%= form_for(resource,
+                 as: resource_name,
+                 url: session_path(resource_name),
+                 html: { class: "space-y-5" }) do |f| %>
+
+      <!-- 社員番号 -->
+      <div>
+        <%= f.label :employee_number,
+                    "社員番号",
+                    class: "block text-sm font-medium text-gray-700" %>
+
+        <%= f.text_field :employee_number,
+                         autofocus: true,
+                         autocomplete: "employee_number",
+                         class: "mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-base focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500" %>
+      </div>
+
+      <!-- パスワード -->
+      <div>
+        <%= f.label :password,
+                    "パスワード",
+                    class: "block text-sm font-medium text-gray-700" %>
+
+        <%= f.password_field :password,
+                             autocomplete: "current-password",
+                             class: "mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-base focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500" %>
+      </div>
+
+      <!-- ログイン状態を保持 -->
+      <% if devise_mapping.rememberable? %>
+        <div class="flex items-center gap-2">
+          <%= f.check_box :remember_me,
+                          class: "h-4 w-4 rounded border-gray-300" %>
+
+          <%= f.label :remember_me,
+                      "ログイン状態を保持する",
+                      class: "text-sm text-gray-700" %>
+        </div>
+      <% end %>
+
+      <!-- ログインボタン -->
+      <div>
+        <%= f.submit "ログイン",
+                     class: "w-full cursor-pointer rounded-md bg-blue-600 px-4 py-3 font-medium text-white hover:bg-blue-700" %>
+      </div>
+
+    <% end %>
+
+    <div class="mt-6 text-center text-sm text-gray-600">
+      <%= render "devise/shared/links" %>
+    </div>
+
+  </div>
+
+</div>

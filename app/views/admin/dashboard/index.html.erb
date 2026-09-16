@@ -1,0 +1,97 @@
+<div class="min-h-screen bg-gray-100 p-6">
+  <div class="w-full">
+
+    <div class="mb-6 gap-4 md:flex-row md:items-start md:justify-between">
+      <h1 class="text-xl font-bold text-gray-900">
+        本日のアルコールチェック状況
+      </h1>
+
+      <h2 class="mt-4 text-xl font-bold text-gray-900 md:text-2xl">
+          <% weekdays = %w[日 月 火 水 木 金 土] %>
+          <%= Date.current.strftime("%Y年%m月%d日") %>（<%= weekdays[Date.current.wday] %>）
+      </h2>
+    </div>
+
+    <div class="flex w-full items-center justify-end gap-2 p-4">
+      <%= link_to "チェック画面へ",
+                  root_path,
+                  class: "rounded-md bg-blue-600 px-3 py-2 text-sm font-medium text-white shadow hover:bg-blue-700" %>
+
+      <%= button_to "ログアウト",
+                  destroy_user_session_path,
+                  method: :delete,
+                  class: "rounded-md bg-gray-600 px-3 py-2 text-sm font-medium text-white shadow hover:bg-gray-500" %>
+    </div>
+
+    <div class="overflow-x-auto rounded-lg bg-white shadow">
+      <table class="w-full">
+        <thead class="bg-gray-50">
+          <tr>
+            <th class="px-6 py-3 text-left text-sm font-medium text-gray-600">
+              社員番号
+            </th>
+
+            <th class="px-6 py-3 text-left text-sm font-medium text-gray-600">
+              氏名
+            </th>
+
+            <th class="px-6 py-3 text-left text-sm font-medium text-gray-600">
+              出社時
+            </th>
+
+            <th class="px-6 py-3 text-left text-sm font-medium text-gray-600">
+              帰社前
+            </th>
+          </tr>
+        </thead>
+
+        <tbody class="divide-y divide-gray-200">
+          <% @users.each do |user| %>
+            <% todays_checks = @todays_checks.select do |check| %>
+              <% check.user_id == user.id %>
+            <% end %>
+
+            <% arrival_check = todays_checks.find(&:arrival?) %>
+            <% departure_check = todays_checks.find(&:departure?) %>
+
+            <tr>
+              <td class="px-6 py-4 text-sm text-gray-700">
+                <%= user.employee_number %>
+              </td>
+
+              <td class="px-6 py-4 font-medium text-gray-900">
+                <%= user.name %>
+              </td>
+
+              <td class="px-6 py-4">
+                <% if arrival_check %>
+                  <span class="font-medium text-green-600">
+                    ✓ 済
+                  </span>
+                <% else %>
+                  <span class="text-red-600">
+                    未
+                  </span>
+                <% end %>
+              </td>
+
+              <td class="px-6 py-4">
+                <% if departure_check %>
+                  <span class="font-medium text-green-600">
+                    ✓ 済
+                  </span>
+                <% else %>
+                  <span class="text-red-600">
+                    未
+                  </span>
+                <% end %>
+              </td>
+            </tr>
+
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</div>

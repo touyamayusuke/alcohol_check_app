@@ -1,0 +1,157 @@
+<div class="min-h-screen bg-gray-100 py-8">
+  <div class="mx-auto max-w-6xl px-6">
+
+    <div class="mb-6 gap-4 md:flex-row md:items-start md:justify-between">
+      <div>
+        <h1 class="text-3xl font-bold text-gray-900 md:text-4xl">
+          アルコールチェック
+        </h1>
+
+        <h2 class="mt-4 text-xl font-bold text-gray-900 md:text-2xl">
+          <% weekdays = %w[日 月 火 水 木 金 土] %>
+          <%= Date.current.strftime("%Y年%m月%d日") %>（<%= weekdays[Date.current.wday] %>）
+        </h2>
+
+        <p class="mt-2 text-sm text-gray-600">
+          <%= current_user.name %>（社員番号：<%= current_user.employee_number %>）
+        </p>
+      </div>
+
+      <div class="flex w-full items-center justify-end gap-2 p-4">
+        <% if current_user.admin? %>
+          <%= link_to "チェック状況一覧",
+                      admin_root_path,
+                      class: "rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700" %>
+        <% end %>
+
+        <%= button_to "ログアウト",
+                      destroy_user_session_path,
+                      method: :delete,
+                      class: "rounded-md bg-gray-600 px-4 py-2 text-sm font-medium text-white hover:bg-gray-500" %>
+      </div>
+  </div>
+
+    <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+
+      <!-- 出社時チェック -->
+      <div class="rounded-lg bg-white p-6 shadow">
+        <h2 class="mb-4 text-lg font-semibold text-gray-900">
+          出社時チェック
+        </h2>
+
+        <% if @arrival_check %>
+
+          <p class="font-medium text-green-600">
+            ✓ チェック済みです
+          </p>
+
+        <% else %>
+
+          <%= form_with model: AlcoholCheck.new, class: "space-y-4" do |f| %>
+
+            <%= f.hidden_field :check_type, value: :arrival %>
+
+            <div>
+              <%= f.label :alcohol_value,
+                          "アルコール濃度",
+                          class: "block text-sm font-medium text-gray-700" %>
+
+              <%= f.number_field :alcohol_value,
+                                 step: 0.01,
+                                 min: 0,
+                                 class: "mt-1 block w-full rounded-md border border-gray-300 px-3 py-2" %>
+            </div>
+
+            <div>
+              <%= f.label :checker_id,
+                          "確認者",
+                          class: "block text-sm font-medium text-gray-700" %>
+
+              <%= f.collection_select :checker_id,
+                                      @checkers,
+                                      :id,
+                                      :name,
+                                      { prompt: "確認者を選択してください" },
+                                      class: "mt-1 block w-full rounded-md border border-gray-300 px-3 py-2" %>
+            </div>
+
+            <div class="flex items-center gap-2">
+              <%= f.check_box :used_detector,
+                              class: "rounded border-gray-300" %>
+
+              <%= f.label :used_detector,
+                          "検知器を使用した",
+                          class: "text-sm text-gray-700" %>
+            </div>
+
+            <%= f.submit "出社時チェックを登録",
+                         class: "w-full rounded-md bg-blue-600 px-4 py-2 font-medium text-white hover:bg-blue-700" %>
+
+          <% end %>
+
+        <% end %>
+      </div>
+
+
+      <!-- 帰社前チェック -->
+      <div class="rounded-lg bg-white p-6 shadow">
+        <h2 class="mb-4 text-lg font-semibold text-gray-900">
+          帰社前チェック
+        </h2>
+
+        <% if @departure_check %>
+
+          <p class="font-medium text-green-600">
+            ✓ チェック済みです
+          </p>
+
+        <% else %>
+
+          <%= form_with model: AlcoholCheck.new, class: "space-y-4" do |f| %>
+
+            <%= f.hidden_field :check_type, value: :departure %>
+
+            <div>
+              <%= f.label :alcohol_value,
+                          "アルコール濃度",
+                          class: "block text-sm font-medium text-gray-700" %>
+
+              <%= f.number_field :alcohol_value,
+                                 step: 0.01,
+                                 min: 0,
+                                 class: "mt-1 block w-full rounded-md border border-gray-300 px-3 py-2" %>
+            </div>
+
+            <div>
+              <%= f.label :checker_id,
+                          "確認者",
+                          class: "block text-sm font-medium text-gray-700" %>
+
+              <%= f.collection_select :checker_id,
+                                      @checkers,
+                                      :id,
+                                      :name,
+                                      { prompt: "確認者を選択してください" },
+                                      class: "mt-1 block w-full rounded-md border border-gray-300 px-3 py-2" %>
+            </div>
+
+            <div class="flex items-center gap-2">
+              <%= f.check_box :used_detector,
+                              class: "rounded border-gray-300" %>
+
+              <%= f.label :used_detector,
+                          "検知器を使用した",
+                          class: "text-sm text-gray-700" %>
+            </div>
+
+            <%= f.submit "帰社前チェックを登録",
+                         class: "w-full rounded-md bg-blue-600 px-4 py-2 font-medium text-white hover:bg-blue-700" %>
+
+          <% end %>
+
+        <% end %>
+      </div>
+
+    </div>
+  </div>
+</div>
