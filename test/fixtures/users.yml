@@ -1,13 +1,14 @@
-# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
 one:
-  employee_number: MyString
-  name: MyString
-  password_digest: MyString
-  role: 1
+  employee_number: "1001"
+  name: "テスト社員1"
+  role: 0
 
 two:
-  employee_number: MyString
-  name: MyString
-  password_digest: MyString
+  employee_number: "1002"
+  name: "テスト社員2"
+  role: 0
+
+admin:
+  employee_number: "9001"
+  name: "テスト管理者"
   role: 1
