@@ -7,7 +7,7 @@ class Admin::AlcoholChecksController < ApplicationController
   def index
     @target_date = parse_date(params[:date])
 
-    @alcohol_checks = AlcoholCheck.where(created_at: @target_date.all_day).includes(:user, :checker).order(created_at: :desc)
+    @alcohol_checks = AlcoholCheck.where(checked_on: @target_date).includes(:user, :checker).order(created_at: :desc)
 
     respond_to do |format|
       format.csv do
@@ -45,7 +45,7 @@ class Admin::AlcoholChecksController < ApplicationController
         csv << [
           check.user.employee_number,
           check.user.name,
-          check.created_at.strftime("%Y/%m/%d"),
+          check.checked_on.strftime("%Y/%m/%d"),
           check.arrival? ? "出社時" : "帰社時",
           check.alcohol_value,
           check.checker.name,

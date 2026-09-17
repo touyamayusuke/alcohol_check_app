@@ -4,13 +4,13 @@ class DashboardController < ApplicationController
   def index
     @arrival_check = current_user.alcohol_checks.find_by(
       check_type: :arrival,
-      created_at: Time.current.all_day
+      checked_on: Date.current
     )
 
 
     @departure_check = current_user.alcohol_checks.find_by(
       check_type: :departure,
-      created_at: Time.current.all_day
+      checked_on: Date.current
     )
 
     @arrival_form = AlcoholCheck.new(check_type: :arrival)

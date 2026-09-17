@@ -27,7 +27,7 @@ class AlcoholCheck < ApplicationRecord
     already_exists = AlcoholCheck.exists?(
       user_id: user_id,
       check_type: check_type,
-      created_at: Time.current.all_day
+      checked_on: Date.current
     )
 
     if already_exists
