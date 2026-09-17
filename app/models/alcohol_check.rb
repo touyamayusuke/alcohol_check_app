@@ -8,8 +8,13 @@ class AlcoholCheck < ApplicationRecord
   validate :checker_must_be_different_from_user
   validate :only_one_check_per_type_per_day, on: :create
 
+  before_validation :set_checked_on, on: :create
+
   private
 
+  def set_checked_on
+    self.checked_on ||= Date.current
+  end
 
   def checker_must_be_different_from_user
     return if checker_id.nil? || user_id.nil?

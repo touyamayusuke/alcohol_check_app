@@ -84,4 +84,28 @@ class AlcoholCheckTest < ActiveSupport::TestCase
 
     assert departure_check.valid?
   end
+
+  test "DBレベルでも同日同種の重複登録を防止する" do
+    AlcoholCheck.create!(
+      user: @user,
+      checker: @checker,
+      check_type: :arrival,
+      alcohol_value: 0.00,
+      used_detector: true,
+      checked_on: Date.current
+    )
+
+    duplicate_check = AlcoholCheck.new(
+      user: @user,
+      checker: @checker,
+      check_type: :arrival,
+      alcohol_value: 0.00,
+      used_detector: true,
+      checked_on: Date.current
+    )
+
+    assert_raises ActiveRecord::RecordNotUnique do
+      duplicate_check.save!(validate: false)
+    end
+  end
 end

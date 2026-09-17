@@ -10,19 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_09_15_054800) do
+ActiveRecord::Schema[8.1].define(version: 2026_09_17_083502) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
   create_table "alcohol_checks", force: :cascade do |t|
     t.decimal "alcohol_value", precision: 4, scale: 2, null: false
     t.integer "check_type", null: false
+    t.date "checked_on", null: false
     t.bigint "checker_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "used_detector", default: true, null: false
     t.bigint "user_id", null: false
     t.index ["checker_id"], name: "index_alcohol_checks_on_checker_id"
+    t.index ["user_id", "check_type", "checked_on"], name: "index_alcohol_checks_on_user_type_and_date", unique: true
     t.index ["user_id"], name: "index_alcohol_checks_on_user_id"
   end
 
