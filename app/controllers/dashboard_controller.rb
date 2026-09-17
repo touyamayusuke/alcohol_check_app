@@ -13,6 +13,9 @@ class DashboardController < ApplicationController
       created_at: Time.current.all_day
     )
 
+    @arrival_form = AlcoholCheck.new(check_type: :arrival)
+    @departure_form = AlcoholCheck.new(check_type: :departure)
+
     @checkers = User.where.not(id: current_user.id)
   end
 end

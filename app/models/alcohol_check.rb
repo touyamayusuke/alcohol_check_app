@@ -13,7 +13,7 @@ class AlcoholCheck < ApplicationRecord
 
   def checker_must_be_different_from_user
     return if checker_id.nil? || user_id.nil?
-    errors.add(:checker, "must be different from user") if checker_id == user_id
+    errors.add(:checker, "は本人以外を選択してください") if checker_id == user_id
   end
 
   def only_one_check_per_type_per_day

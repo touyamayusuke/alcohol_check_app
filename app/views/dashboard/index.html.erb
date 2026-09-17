@@ -10,6 +10,7 @@
         <h2 class="mt-4 text-xl font-bold text-gray-900 md:text-2xl">
           <% weekdays = %w[日 月 火 水 木 金 土] %>
           <%= Date.current.strftime("%Y年%m月%d日") %>（<%= weekdays[Date.current.wday] %>）
+          <%= Time.current.strftime("%H:%M") %>現在
         </h2>
 
         <p class="mt-2 text-sm text-gray-600">
@@ -47,9 +48,9 @@
 
         <% else %>
 
-          <%= form_with model: AlcoholCheck.new, class: "space-y-4" do |f| %>
+          <%= form_with model: @arrival_form, class: "space-y-4" do |f| %>
 
-            <%= f.hidden_field :check_type, value: :arrival %>
+            <%= f.hidden_field :check_type %>
 
             <div>
               <%= f.label :alcohol_value,
@@ -107,9 +108,9 @@
 
         <% else %>
 
-          <%= form_with model: AlcoholCheck.new, class: "space-y-4" do |f| %>
+          <%= form_with model: @departure_form, class: "space-y-4" do |f| %>
 
-            <%= f.hidden_field :check_type, value: :departure %>
+            <%= f.hidden_field :check_type %>
 
             <div>
               <%= f.label :alcohol_value,

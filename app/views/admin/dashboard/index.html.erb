@@ -8,11 +8,30 @@
 
       <h2 class="mt-4 text-xl font-bold text-gray-900 md:text-2xl">
           <% weekdays = %w[日 月 火 水 木 金 土] %>
-          <%= Date.current.strftime("%Y年%m月%d日") %>（<%= weekdays[Date.current.wday] %>）
+          <%= @target_date.strftime("%Y年%m月%d日") %>（<%= weekdays[@target_date.wday] %>）
+          <%= Time.current.strftime("%H:%M") %>現在
       </h2>
     </div>
 
+  <div class="mb-6 rounded-lg bg-white p-4 shadow">
+    <%= form_with url: admin_root_path, method: :get, class: "flex flex-wrap items-end gap-3" do |f| %>
+      <div>
+        <%= f.label :date, "対象日",
+                    class: "mb-1 block text-sm font-medium text-gray-700" %>
+        <%= f.date_field :date,
+                        value: @target_date,
+                        class: "rounded-md border border-gray-300 px-3 py-2" %>
+      </div>
+      <%= f.submit "表示する",
+                  class: "rounded-md bg-blue-600 px-4 py-2 font-medium text-white hover:bg-blue-700" %>
+      <% end %>
+  </div>
+
     <div class="flex w-full items-center justify-end gap-2 p-4">
+      <%= link_to "CSVをダウンロード",
+                  admin_alcohol_checks_path(format: :csv, date: @target_date),
+                  class: "rounded-md bg-gray-600 px-3 py-2 text-sm font-medium text-white shadow hover:bg-gray-700" %>
+
       <%= link_to "チェック画面へ",
                   root_path,
                   class: "rounded-md bg-blue-600 px-3 py-2 text-sm font-medium text-white shadow hover:bg-blue-700" %>
@@ -47,12 +66,10 @@
 
         <tbody class="divide-y divide-gray-200">
           <% @users.each do |user| %>
-            <% todays_checks = @todays_checks.select do |check| %>
-              <% check.user_id == user.id %>
-            <% end %>
+            <% target_checks = user.alcohol_checks.select { |check| check.created_at.to_date == @target_date } %>
 
-            <% arrival_check = todays_checks.find(&:arrival?) %>
-            <% departure_check = todays_checks.find(&:departure?) %>
+            <% arrival_check = target_checks.find(&:arrival?) %>
+            <% departure_check = target_checks.find(&:departure?) %>
 
             <tr>
               <td class="px-6 py-4 text-sm text-gray-700">

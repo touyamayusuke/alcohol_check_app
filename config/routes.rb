@@ -3,6 +3,8 @@ Rails.application.routes.draw do
 
   namespace :admin do
     root "dashboard#index"
+
+    resources :alcohol_checks, only: [:index]
   end
 
   root "dashboard#index"
