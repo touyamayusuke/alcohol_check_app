@@ -49,6 +49,46 @@
 - Docker
 - Dev Containers
 
+## ER図
+
+```mermaid
+erDiagram
+    USERS ||--o{ ALCOHOL_CHECKS : "実施する"
+    USERS ||--o{ ALCOHOL_CHECKS : "確認する"
+
+    USERS {
+        bigint id PK
+        string employee_number
+        string name
+        integer role
+        string encrypted_password
+        datetime created_at
+        datetime updated_at
+    }
+
+    ALCOHOL_CHECKS {
+        bigint id PK
+        bigint user_id FK
+        bigint checker_id FK
+        integer check_type
+        decimal alcohol_value
+        boolean used_detector
+        date checked_on
+        datetime created_at
+        datetime updated_at
+    }
+```
+
+### データ整合性
+
+`alcohol_checks`テーブルでは、以下の3カラムに複合ユニークインデックスを設定しています。
+
+- `user_id`
+- `check_type`
+- `checked_on`
+
+これにより、同一社員が同じ日に同じ種類のアルコールチェックを複数登録することをDBレベルでも防止しています。
+
 ## データ設計
 
 ### User
