@@ -27,6 +27,20 @@
 - 日付を指定したチェック状況確認
 - 指定日のチェック記録のCSV出力
 
+## 画面イメージ
+
+### ログイン画面
+
+![ログイン画面](docs/images/login.png)
+
+### アルコールチェック登録画面
+
+![アルコールチェック登録画面](docs/images/employee-dashboard.png)
+
+### 管理者画面
+
+![管理者画面](docs/images/admin-dashboard.png)
+
 ## 使用技術
 
 ### Backend
