@@ -8,6 +8,9 @@ image: touyamayusuke/alcohol_check_app
 servers:
   web:
     - 160.251.204.239
+proxy:
+  ssl: true
+  host: alcohol-check-app.com
   # job:
   #   hosts:
   #     - 192.168.0.1
