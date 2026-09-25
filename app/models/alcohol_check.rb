@@ -1,6 +1,6 @@
 class AlcoholCheck < ApplicationRecord
   belongs_to :user
-  belongs_to :checker, class_name: 'User'
+  belongs_to :checker, class_name: "User"
 
   enum :check_type, arrival: 0, departure: 1
 

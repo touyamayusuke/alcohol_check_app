@@ -3,7 +3,7 @@
 ### Rubocop（rubocop-rails-omakase）
 
 - スタイルの正はRubocopの設定（`.rubocop.yml`）。コミット前に`bin/rubocop -a`で自動修正し、`bin/rubocop`で警告が出ないことを確認する。
-- 文字列はダブルクォートを使う（`Style/StringLiterals`）。既存コード（`user.rb`の`class_name: 'User'`等）に違反箇所が残っているが、新規に書くコードでは踏襲しない。
+- 文字列はダブルクォートを使う（`Style/StringLiterals`）。
 - 配列リテラルの角括弧内にスペースを入れる（`Layout/SpaceInsideArrayLiteralBrackets`）: `%i[ mri windows ]`のようにGemfileで使われている書き方に合わせる。
 
 ### エラーメッセージ・国際化
