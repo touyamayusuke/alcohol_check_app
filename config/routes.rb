@@ -6,11 +6,11 @@ Rails.application.routes.draw do
   namespace :admin do
     root "dashboard#index"
 
-    resources :alcohol_checks, only: [:index]
-    resources :users, only: [:index, :new, :create, :edit, :update]
+    resources :alcohol_checks, only: [ :index ]
+    resources :users, only: [ :index, :new, :create, :edit, :update ]
   end
 
   root "dashboard#index"
 
-  resources :alcohol_checks, only: [:create]
+  resources :alcohol_checks, only: [ :create ]
 end

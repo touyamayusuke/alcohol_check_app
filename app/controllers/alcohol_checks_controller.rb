@@ -5,7 +5,7 @@ class AlcoholChecksController < ApplicationController
     @alcohol_check = AlcoholCheck.new(alcohol_check_params)
     @alcohol_check.user = current_user
 
-    if @alcohol_check.save
+    if save_alcohol_check
       redirect_to root_path, notice: "アルコールチェックを登録しました"
     else
       prepare_dashboard
@@ -23,6 +23,14 @@ class AlcoholChecksController < ApplicationController
   end
 
   private
+
+  # 同時リクエストでバリデーションをすり抜けた重複は、DBのユニークインデックスで弾かれる
+  def save_alcohol_check
+    @alcohol_check.save
+  rescue ActiveRecord::RecordNotUnique
+    @alcohol_check.errors.add(:base, "同じ種類のアルコールチェックは1日1回までです")
+    false
+  end
 
   def prepare_dashboard
     @arrival_check = current_user.alcohol_checks.find_by(

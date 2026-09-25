@@ -1,4 +1,4 @@
-require 'csv'
+require "csv"
 
 class Admin::AlcoholChecksController < Admin::BaseController
   def index

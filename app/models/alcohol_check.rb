@@ -1,6 +1,6 @@
 class AlcoholCheck < ApplicationRecord
   belongs_to :user
-  belongs_to :checker, class_name: 'User'
+  belongs_to :checker, class_name: "User"
 
   enum :check_type, arrival: 0, departure: 1
 
@@ -27,7 +27,7 @@ class AlcoholCheck < ApplicationRecord
     already_exists = AlcoholCheck.exists?(
       user_id: user_id,
       check_type: check_type,
-      checked_on: Date.current
+      checked_on: checked_on
     )
 
     if already_exists

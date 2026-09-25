@@ -85,6 +85,50 @@ class AlcoholCheckTest < ActiveSupport::TestCase
     assert departure_check.valid?
   end
 
+  test "当日に登録済みでも過去日付の同種チェックは登録できる" do
+    AlcoholCheck.create!(
+      user: @user,
+      checker: @checker,
+      check_type: :arrival,
+      alcohol_value: 0.00,
+      used_detector: true
+    )
+
+    past_check = AlcoholCheck.new(
+      user: @user,
+      checker: @checker,
+      check_type: :arrival,
+      alcohol_value: 0.00,
+      used_detector: true,
+      checked_on: Date.current.yesterday
+    )
+
+    assert past_check.valid?
+  end
+
+  test "過去日付でも同じ日に同じ種類のチェックは2回登録できない" do
+    AlcoholCheck.create!(
+      user: @user,
+      checker: @checker,
+      check_type: :arrival,
+      alcohol_value: 0.00,
+      used_detector: true,
+      checked_on: Date.current.yesterday
+    )
+
+    duplicate_check = AlcoholCheck.new(
+      user: @user,
+      checker: @checker,
+      check_type: :arrival,
+      alcohol_value: 0.00,
+      used_detector: true,
+      checked_on: Date.current.yesterday
+    )
+
+    assert_not duplicate_check.valid?
+    assert duplicate_check.errors[:base].present?
+  end
+
   test "DBレベルでも同日同種の重複登録を防止する" do
     AlcoholCheck.create!(
       user: @user,
