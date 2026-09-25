@@ -28,6 +28,10 @@
   </div>
 
     <div class="flex w-full items-center justify-end gap-2 p-4">
+      <%= link_to "ユーザー管理",
+                  admin_users_path,
+                  class: "rounded-md bg-blue-600 px-3 py-2 text-sm font-medium text-white shadow hover:bg-blue-700" %>
+
       <%= link_to "CSVをダウンロード",
                   admin_alcohol_checks_path(format: :csv, date: @target_date),
                   class: "rounded-md bg-gray-600 px-3 py-2 text-sm font-medium text-white shadow hover:bg-gray-700" %>
