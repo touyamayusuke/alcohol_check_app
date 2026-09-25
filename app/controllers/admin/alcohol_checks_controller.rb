@@ -1,9 +1,6 @@
 require 'csv'
 
-class Admin::AlcoholChecksController < ApplicationController
-  before_action :authenticate_user!
-  before_action :require_admin
-
+class Admin::AlcoholChecksController < Admin::BaseController
   def index
     @target_date = parse_date(params[:date])
 
@@ -53,12 +50,6 @@ class Admin::AlcoholChecksController < ApplicationController
           check.created_at.strftime("%H:%M")
         ]
       end
-    end
-  end
-
-  def require_admin
-    unless current_user.admin?
-      redirect_to root_path, alert: "管理者権限が必要です"
     end
   end
 end

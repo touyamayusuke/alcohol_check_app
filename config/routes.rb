@@ -7,6 +7,7 @@ Rails.application.routes.draw do
     root "dashboard#index"
 
     resources :alcohol_checks, only: [:index]
+    resources :users, only: [:index, :new, :create, :edit, :update]
   end
 
   root "dashboard#index"

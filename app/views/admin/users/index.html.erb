@@ -1,0 +1,39 @@
+<div class="mx-auto max-w-6xl px-4 py-8">
+  <div class="mb-6 flex items-center justify-between">
+    <h1 class="text-2xl font-bold">ユーザー管理</h1>
+
+    <%= link_to "ユーザーを新規登録",
+                new_admin_user_path,
+                class: "rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700" %>
+  </div>
+
+  <div class="overflow-x-auto rounded-lg bg-white shadow">
+    <table class="w-full">
+      <thead class="bg-gray-100">
+        <tr>
+          <th class="px-4 py-3 text-left">社員番号</th>
+          <th class="px-4 py-3 text-left">氏名</th>
+          <th class="px-4 py-3 text-left">権限</th>
+          <th class="px-4 py-3 text-left">操作</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @users.each do |user| %>
+          <tr class="border-t">
+            <td class="px-4 py-3"><%= user.employee_number %></td>
+            <td class="px-4 py-3"><%= user.name %></td>
+            <td class="px-4 py-3">
+              <%= user.admin? ? "管理者" : "一般社員" %>
+            </td>
+            <td class="px-4 py-3">
+              <%= link_to "編集",
+                          edit_admin_user_path(user),
+                          class: "text-blue-600 hover:underline" %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -1,0 +1,47 @@
+<% if user.errors.any? %>
+  <div class="mb-6 rounded bg-red-50 p-4 text-red-700">
+    <p class="font-bold">入力内容を確認してください</p>
+
+    <ul class="mt-2 list-disc pl-5">
+      <% user.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<%= form_with model: [:admin, user], class: "space-y-5" do |form| %>
+  <div>
+    <%= form.label :employee_number, "社員番号",
+                   class: "mb-1 block font-medium" %>
+
+    <%= form.text_field :employee_number,
+                        class: "w-full rounded border border-gray-300 px-3 py-2" %>
+  </div>
+
+  <div>
+    <%= form.label :name, "氏名",
+                   class: "mb-1 block font-medium" %>
+
+    <%= form.text_field :name,
+                        class: "w-full rounded border border-gray-300 px-3 py-2" %>
+  </div>
+
+  <div>
+    <%= form.label :role, "権限",
+                   class: "mb-1 block font-medium" %>
+
+    <%= form.select :role,
+                    [["一般社員", "employee"], ["管理者", "admin"]],
+                    {},
+                    class: "w-full rounded border border-gray-300 px-3 py-2" %>
+  </div>
+
+  <div class="flex gap-3">
+    <%= form.submit "登録する", class: "rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700" %>
+
+    <%= link_to "戻る",
+                admin_users_path,
+                class: "rounded border px-4 py-2 hover:bg-gray-50" %>
+  </div>
+<% end %>
