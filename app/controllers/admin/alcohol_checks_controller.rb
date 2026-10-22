@@ -26,7 +26,8 @@ class Admin::AlcoholChecksController < Admin::BaseController
   end
 
   def generate_csv(alcohol_checks)
-    CSV.generate(headers: true) do |csv|
+    # Windows版ExcelでUTF-8として認識させるためBOMを付与する
+    CSV.generate("﻿", headers: true) do |csv|
       csv << [
         "社員番号",
         "社員名",
